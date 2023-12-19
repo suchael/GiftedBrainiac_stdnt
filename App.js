@@ -5,12 +5,34 @@ import {StyleSheet,
 				ScrollView, TouchableOpacity,
 				
 				} from 'react-native';
+				
+import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-import { Ionicons } from '@expo/vector-icons';
+// Icons
+import { Ionicons , FontAwesome } from '@expo/vector-icons';
+
+// My import
+import PaymentHistory from "./src/PaymentHistory.js";
+import PayNow from "./src/PayNow.js";
 
 
+const Stack = createNativeStackNavigator();
+function App(){
+	return(
+		<NavigationContainer>
+			<Stack.Navigator initialRouteName='Home' >
+				<Stack.Screen name = "Home" component={Home} options={{headerShown: false, }}/>
+				<Stack.Screen name = "PaymentHistory" component={PaymentHistory} options={{ title: 'Payment History' }}/>
+				<Stack.Screen name = "PayNow" component={PayNow} options={{ title: 'Pay Now' }}/>
+			 </Stack.Navigator>
+		</NavigationContainer>
+	);
+}
 
-const App = () => {
+
+const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
     	<StatusBar backgroundColor="lightgray" barStyle="light-content" />
@@ -33,7 +55,7 @@ function Main(){
 	const msg = "No payment, No class activity. \nPlease pay your lesson fees between the first 2 days of every month or you risk being sent home."
 	const month = "\nJANUARY"
 	return(
-		<ScrollView contentContainerStyle={{flex: 1}}>
+		<ScrollView >
 			<View style ={styles.main}>
 				<Text style={{fontSize: 19, fontWeight: "bold", color: "green"}}>
 					Ahmed Success,{"\t"}<Text style={{fontSize: 16, fontWeight: "500", color: "black"}}>Welcome</Text>
@@ -49,7 +71,7 @@ function Main(){
 					</Text>
 					<YesButton month ={month}/>
 				</View>
-				
+				<UserBtn/>
 			</View>
 		</ScrollView>
 	)
@@ -100,6 +122,50 @@ function YesButton({month}) {
       		{isYes? "You've paid for": "You've Not paid for"} {month} 
         	</Text>
       </View>
+  );
+}
+
+
+
+
+function UserBtn() {
+  const numberOfButtons = 3;
+  const navigation = useNavigation();
+
+  const buttonTexts = ["I want to pay", "Payment history", "Contact us"];
+
+  const onPressHandler = (index) => {
+    // Define your navigation logic for each button here
+    switch (index) {
+      case 0:
+        navigation.navigate('PayNow');
+        break;
+      case 1:
+        navigation.navigate('PaymentHistory');
+        break;
+      case 2:
+        navigation.navigate('ContactScreen');
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <View style={{ marginHorizontal: -15, paddingHorizontal: 15, borderTopWidth: 3, borderColor: "gray", marginTop: 20, paddingVertical: 15 }}>
+      {Array.from({ length: numberOfButtons }, (_, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => onPressHandler(index)}
+          style={{ borderWidth: 2, borderColor: "lightgray", flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 20, paddingVertical: 8, borderRadius: 15, marginBottom: 10 }}
+        >
+          <Text style={{ fontSize: 17, fontWeight: "500" }}>
+            {buttonTexts[index]}
+          </Text>
+          <FontAwesome name="angle-right" size={24} color="black" />
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }
 
