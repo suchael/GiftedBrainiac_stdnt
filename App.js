@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,10 +10,10 @@ import {
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as SecureStore from 'expo-secure-store';
-
+import * as SecureStore from "expo-secure-store";
 
 // My import
+// import Header from "./src/Header.js";
 import PaymentHistory from "./src/PaymentHistory.js";
 import PayNow from "./src/PayNow.js";
 import StdntSwitchSession from "./src/StdntSwitchSession.js";
@@ -22,6 +22,9 @@ import ReactContext from "./src/Context/ReactContext.js";
 import StdntMain from "./userAcctType/StdntMain.js";
 import TeachersMain from "./userAcctType/TeachersMain.js";
 import TeacherPaymentHistoryBtn from "./userAcctType/TeacherPaymentHistoryBtn.js";
+import SignUp from "./src/loginSignup/SignUp.js";
+import Login from "./src/loginSignup/Login.js";
+
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -33,7 +36,6 @@ function App() {
     PaymentCategory[stdntSession]
   ); // contains {"monthlyPayment": "₦7,000", "time": "9AM to 1PM", "weeklyPayment": "₦1,850"}
 
-  console.log("INDEX_App: ", index);
   const contextValue = {
     stdntSession,
     setStdntSession,
@@ -45,7 +47,7 @@ function App() {
   return (
     <ReactContext.Provider value={contextValue}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="SignUp">
           <Stack.Screen
             name="Home"
             component={Home}
@@ -67,6 +69,16 @@ function App() {
             options={{ title: "Switch session" }}
           />
           <Stack.Screen
+            name="SignUp"
+            component={SignUp}
+            options={{ title: "Sign up", headerShown: false }}
+            />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: "Login", headerShown: false }}
+            />
+          <Stack.Screen
             name="TeacherPaymentHistoryBtn"
             component={TeacherPaymentHistoryBtn}
             options={{ title: "Payment History" }}
@@ -77,8 +89,21 @@ function App() {
   );
 }
 
+
+
+function Header() {
+  return (
+        <View style={styles.header}>
+          <Text style={{ fontSize: 21, fontWeight: '600' }}>
+            Gifted Brainiac Tutor{' '}
+          </Text>
+          <Text style={{ fontSize: 19, fontWeight: '500' }}>Gb Tut </Text>
+        </View>
+  );
+}
+
 const Home = () => {
-    const [isStudent, setIsStudent] = useState(null);
+  const [isStudent, setIsStudent] = useState(null);
 
   useEffect(() => {
     // Load user preference from SecureStore when the component mounts
@@ -97,61 +122,57 @@ const Home = () => {
 
   const saveUserPreference = async (value) => {
     try {
-      await SecureStore.setItemAsync('userPreference', JSON.stringify(value));
+      await SecureStore.setItemAsync("userPreference", JSON.stringify(value));
     } catch (error) {
-      console.error('Error saving user preference:', error);
+      console.error("Error saving user preference:", error);
     }
   };
 
   const loadUserPreference = async () => {
     try {
-      const storedPreference = await SecureStore.getItemAsync('userPreference');
+      const storedPreference = await SecureStore.getItemAsync("userPreference");
       if (storedPreference !== null) {
         // Convert the stored preference back to a boolean
         setIsStudent(JSON.parse(storedPreference));
       }
     } catch (error) {
-      console.error('Error loading user preference:', error);
+      console.error("Error loading user preference:", error);
     }
   };
-  
-    return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="lightgray" barStyle="light-content" />
-        <Header />
-        {isStudent === null ? (
-          <View style={styles.contentContainer}>
-            <Text style={styles.title}>Choose carefully</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity onPress={handleStudentButtonClick} style={styles.button}>
-                <Text style={styles.buttonText}>Student</Text>
-              </TouchableOpacity>
-              <Text style={styles.orText}>Or</Text>
-              <TouchableOpacity onPress={handleTeacherButtonClick} style={styles.buttonTeacher}>
-                <Text style={styles.buttonText}>Teacher</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : isStudent ? (
-          <StdntMain />
-        ) : (
-          <TeachersMain />
-        )}
-      </SafeAreaView>
-    );
-  };
-  
 
-function Header() {
   return (
-    <View style={styles.header}>
-      <Text style={{ fontSize: 21, fontWeight: "600" }}>
-        Gifted Brainiac Tutor{" "}
-      </Text>
-      <Text style={{ fontSize: 19, fontWeight: "500" }}>Gb Tut </Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="lightgray" barStyle="light-content" />
+      <Header />
+      {isStudent === null ? (
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>Choose carefully</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              onPress={handleStudentButtonClick}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Student</Text>
+            </TouchableOpacity>
+            <Text style={styles.orText}>Or</Text>
+            <TouchableOpacity
+              onPress={handleTeacherButtonClick}
+              style={styles.buttonTeacher}
+            >
+              <Text style={styles.buttonText}>Teacher</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : isStudent ? (
+        <StdntMain />
+      ) : (
+        <TeachersMain />
+      )}
+    </SafeAreaView>
   );
-}
+};
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -161,6 +182,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 15,
+  },
+  header: {
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 6,
   },
   title: {
     textAlign: "center",
@@ -196,17 +228,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
     borderRadius: 10,
-  },
-  header: {
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderBottomRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 6,
   },
   main: {
     paddingHorizontal: 15,
