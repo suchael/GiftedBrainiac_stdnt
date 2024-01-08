@@ -103,7 +103,7 @@ export default function Signup() {
 
   const signUp = async () => {
     try {
-        const userCredential = await signInWithEmailAndPassword (auth, "eculis@gmail.com", "cu134");
+        const userCredential = await signInWithEmailAndPassword (auth, "hi@gmail.com", "cu134");
         const userDetails = userCredential.user;
         await updateProfile(userDetails, {
             displayName: "John Doe", // Add display name for testing
@@ -288,7 +288,7 @@ export default function Signup() {
 
               <TouchableOpacity
                 // onPress={handleSignup}
-                onPress={signUp}
+                onPress={handleSignup}
                 style={{
                   height: 42,
                   borderRadius: 35,
