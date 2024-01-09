@@ -25,6 +25,7 @@ import TeacherPaymentHistoryBtn from "./userAcctType/TeacherPaymentHistoryBtn.js
 import SignUp from "./src/loginSignup/SignUp.js";
 import Login from "./src/loginSignup/Login.js";
 
+import { color } from "./Color.js";
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -72,12 +73,12 @@ function App() {
             name="SignUp"
             component={SignUp}
             options={{ title: "Sign up", headerShown: false }}
-            />
+          />
           <Stack.Screen
             name="Login"
             component={Login}
             options={{ title: "Login", headerShown: false }}
-            />
+          />
           <Stack.Screen
             name="TeacherPaymentHistoryBtn"
             component={TeacherPaymentHistoryBtn}
@@ -89,90 +90,27 @@ function App() {
   );
 }
 
-
-
 function Header() {
   return (
-        <View style={styles.header}>
-          <Text style={{ fontSize: 21, fontWeight: '600' }}>
-            Gifted Brainiac Tutor{' '}
-          </Text>
-          <Text style={{ fontSize: 19, fontWeight: '500' }}>Gb Tut </Text>
-        </View>
+    <View style={styles.header}>
+      <StatusBar
+        backgroundColor={color.primaryColor}
+        barStyle="light-content"
+      />
+      <Text style={styles.headerText}>Gifted Brainiac Tutor</Text>
+      <Text style={styles.subHeaderText}>Gb Tut</Text>
+    </View>
   );
 }
 
 const Home = () => {
-  const [isStudent, setIsStudent] = useState(null);
-
-  useEffect(() => {
-    // Load user preference from SecureStore when the component mounts
-    loadUserPreference();
-  }, []);
-
-  const handleStudentButtonClick = () => {
-    setIsStudent(true);
-    saveUserPreference(true);
-  };
-
-  const handleTeacherButtonClick = () => {
-    setIsStudent(false);
-    saveUserPreference(false);
-  };
-
-  const saveUserPreference = async (value) => {
-    try {
-      await SecureStore.setItemAsync("userPreference", JSON.stringify(value));
-    } catch (error) {
-      console.error("Error saving user preference:", error);
-    }
-  };
-
-  const loadUserPreference = async () => {
-    try {
-      const storedPreference = await SecureStore.getItemAsync("userPreference");
-      if (storedPreference !== null) {
-        // Convert the stored preference back to a boolean
-        setIsStudent(JSON.parse(storedPreference));
-      }
-    } catch (error) {
-      console.error("Error loading user preference:", error);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="lightgray" barStyle="light-content" />
       <Header />
-      {isStudent === null ? (
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>Choose carefully</Text>
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              onPress={handleStudentButtonClick}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Student</Text>
-            </TouchableOpacity>
-            <Text style={styles.orText}>Or</Text>
-            <TouchableOpacity
-              onPress={handleTeacherButtonClick}
-              style={styles.buttonTeacher}
-            >
-              <Text style={styles.buttonText}>Teacher</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      ) : isStudent ? (
-        <StdntMain />
-      ) : (
-        <TeachersMain />
-      )}
+      <StdntMain />
     </SafeAreaView>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -184,15 +122,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   header: {
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
+    zIndex: 10,
+    elevation: 10,
+    backgroundColor: color.primaryColor,
     borderBottomRightRadius: 25,
     borderBottomLeftRadius: 25,
-    borderColor: "black",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 6,
+    paddingVertical: 12,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "600",
+    color: color.colorWhite,
+},
+subHeaderText: {
+    fontSize: 20,
+    fontWeight: "500",
+    color: color.colorWhite,
   },
   title: {
     textAlign: "center",

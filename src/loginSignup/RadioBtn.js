@@ -1,6 +1,8 @@
 // DynamicButtons.js
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { color } from "../../Color.js";
+
 
 const DynamicButtons = ({ options, selectedOption, onSelect, displayText }) => {
   const handlePress = (option) => {
@@ -21,7 +23,7 @@ const DynamicButtons = ({ options, selectedOption, onSelect, displayText }) => {
             ]}
             onPress={() => handlePress(option)}
           >
-            <Text style={styles.buttonText}>{option}</Text>
+            <Text style={[styles.buttonText, selectedOption === option && styles.selectedButtonText]}>{option}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Adjust this based on your layout needs
   },
   button: {
-    flex: 1, // Take up equal space in the row
+    flex: 1, 
     padding: 10,
     marginVertical: 5,
     borderWidth: 1.5,
@@ -47,7 +49,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   selectedButton: {
-    backgroundColor: '#66b2ff', // Change the color as needed
+    backgroundColor: color.primaryColor, 
+  },
+  selectedButtonText: {
+    color: color.colorWhite, 
   },
   buttonText: {
     textAlign: 'center',
