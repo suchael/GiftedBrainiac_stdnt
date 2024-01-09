@@ -176,7 +176,8 @@ function UserBtn() {
           onPress={() => onPressHandler(index)}
           style={{
             borderWidth: 2,
-            borderColor: "lightgray",
+            backgroundColor: buttonTexts[index] === "I want to pay"? color.primaryColor: "white",
+            borderColor: color.primaryColor,
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
@@ -186,10 +187,11 @@ function UserBtn() {
             marginBottom: 10,
           }}
         >
-          <Text style={{ fontSize: 17, fontWeight: "500" }}>
+          <Text style={{ fontSize: 17, fontWeight: "500", color: buttonTexts[index] === "I want to pay"? color.colorWhite : color.colorBlack,
+ }}>
             {buttonTexts[index]}
           </Text>
-          <FontAwesome name="angle-right" size={24} color="black" />
+          <FontAwesome name="angle-right" size={24} color={buttonTexts[index] === "I want to pay"? color.colorWhite: color.colorBlack}/>
         </TouchableOpacity>
       ))}
       <ContactUsAndGroupBtn />
@@ -212,7 +214,7 @@ function ContactUsAndGroupBtn() {
     switch (index) {
       case 0:
         // Open WhatsApp with a specific phone number
-        openWhatsappWithPhoneNumber("+2349031143122"); // Replace with the desired phone number
+        openWhatsappWithPhoneNumber("+2348168463898"); // Replace with the desired phone number
         break;
       case 1:
         // Open WhatsApp group for "Gb Tut - General Group"
@@ -290,7 +292,7 @@ function ContactUsAndGroupBtn() {
 function JampAppBtn() {
   const openPlayStore = async () => {
     const playStoreUrl =
-      "https://play.google.com/store/apps/details?id=com.whatsapp"; // Replace with your app's package name
+      "https://play.google.com/store/apps/details?id=com.whatsapp"; 
 
     try {
       const supported = await Linking.canOpenURL(playStoreUrl);

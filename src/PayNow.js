@@ -15,6 +15,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as Clipboard from "expo-clipboard";
+import { color } from "../Color.js";
 
 const MyComponent = () => {
   const { stdntSession, stdntPayment } = useContext(ReactContext);
@@ -29,7 +30,7 @@ const MyComponent = () => {
     alert("Account number copied successfully");
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,     backgroundColor: color.colorWhite,}}>
       <ScrollView>
         <View style={styles.container}>
           <Text
@@ -44,7 +45,7 @@ const MyComponent = () => {
             You are in{" "}
             <Text style={{ fontWeight: "bold" }}>{stdntSession},</Text>
             {"\t"}Pay{" "}
-            <Text style={{ fontWeight: "bold", color: "blue", fontSize: 20 }}>
+            <Text style={{ fontWeight: "bold", color: color.primaryColor, fontSize: 20 }}>
               {"\n\n"}
               {stdntPayment.monthlyPayment}
             </Text>{" "}
@@ -63,7 +64,7 @@ const MyComponent = () => {
               textAlign: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", color: "blue", fontSize: 20 }}>
+            <Text style={{ fontWeight: "bold", color: color.primaryColor, fontSize: 20 }}>
               {stdntPayment.weeklyPayment}
             </Text>{" "}
             Weekly
@@ -82,7 +83,7 @@ const MyComponent = () => {
               marginBottom: 10,
             }}
           >
-            <Text style={{ fontWeight: "bold", color: "blue", fontSize: 20 }}>
+            <Text style={{ fontWeight: "bold", color: color.primaryColor, fontSize: 20 }}>
               {stdntPayment.dailyPayment}
             </Text>{" "}
             Daily
@@ -109,7 +110,7 @@ const MyComponent = () => {
               </Text>
               <Text style={styles.text}>
                 Account Name:{"\t\t"}
-                <Text style={{ fontWeight: "500" }}>Ahmed Success</Text>
+                <Text style={{ fontWeight: "500" }}>John Prosper</Text>
               </Text>
               <TouchableOpacity
                 onPress={handleBtn}
@@ -172,7 +173,7 @@ function HaveYOuPaid() {
       <TouchableOpacity
         onPress={handleBtn}
         style={{
-          backgroundColor: "black",
+          backgroundColor: color.primaryColor,
           paddingHorizontal: 15,
           marginHorizontal: 15,
           paddingVertical: 4,
@@ -224,10 +225,10 @@ function HaveYOuPaid() {
           <TouchableOpacity
             onPress={pickImage}
             style={{
-              backgroundColor: "blue",
+              backgroundColor: color.primaryColor,
               paddingHorizontal: 15,
               marginHorizontal: 15,
-              paddingVertical: 4,
+              paddingVertical: 7,
               justifyContent: "space-between",
               alignItems: "center",
               borderRadius: 5,
@@ -254,7 +255,7 @@ function HaveYOuPaid() {
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={{
-                  backgroundColor: "blue",
+                  backgroundColor: color.primaryColor,
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   marginVertical: 15,
@@ -328,7 +329,7 @@ function PaymentHistoryBtn() {
       <TouchableOpacity
         onPress={handleBtn}
         style={{
-          backgroundColor: "black",
+          backgroundColor: color.primaryColor,
           paddingHorizontal: 15,
           paddingVertical: 8,
           justifyContent: "center",
@@ -347,6 +348,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 120,
+    backgroundColor: color.colorWhite,
   },
   text: {
     fontSize: 18,

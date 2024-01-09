@@ -48,7 +48,13 @@ function App() {
   return (
     <ReactContext.Provider value={contextValue}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignUp">
+        <Stack.Navigator initialRouteName="SignUp" screenOptions={{
+        headerStyle: {
+          backgroundColor: color.primaryColor,
+        },
+        headerTintColor: color.colorWhite, // Color of the back arrow and text
+        headerBackTitleVisible: false, // Hide the back button title
+      }}>
           <Stack.Screen
             name="Home"
             component={Home}
